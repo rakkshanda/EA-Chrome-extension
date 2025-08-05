@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Portfolio news",
+  "version": "1.0",
+  "description": "Chrome extention for fething stock news feed.",
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": [
+    "https://finnhub.io/*",
+    "https://sentim-api.herokuapp.com/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    { "matches": ["<all_urls>"], "js": ["content.js"], "run_at": "document_idle" }
+  ],
+  "web_accessible_resources": [
+    { "resources": ["overlay.css", "assets/icon.png" ], "matches": ["<all_urls>"] 
+  }
+  ],
+    "action": {                   
+    "default_title": "Portfolio News",
+    "default_icon": {
+      "16": "assets/icon.png",  
+      "32": "assets/icon.png",
+      "48": "assets/icon.png"
+    }
+  },
+  "icons": {                   
+    "16": "assets/icon.png",
+    "32": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  }
+}

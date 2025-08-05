@@ -1,0 +1,156 @@
+/* =============================================================
+   VARIABLES & COLOURS
+   =============================================================*/
+$font   : 'Inter', Arial, sans-serif;
+$green  : #22c55e;
+$yellow : #eab308;
+$blue   : #3b82f6;
+$teal   : #0f766e;
+
+$fyiPos : #16a34a;
+$fyiNeg : #dc2626;
+$fyiNeu : #3b82f6;
+
+/* =============================================================
+   MAIN OVERLAY CONTAINER
+   =============================================================*/
+#news-overlay{
+  position:fixed; top:20px; right:20px; width:420px; max-height:80vh;
+  overflow-y:auto; background:#fafafa; color:#111;
+  border-radius:12px; box-shadow:0 4px 14px rgba(#000,.15);
+  z-index:999999; font-family:$font; padding:16px 20px 20px; display:none;
+
+  /* -------- CLOSE × ------------ */
+  .close{
+    position:absolute; top:6px; right:8px;
+    background:none; border:0; font-size:20px;
+    color:#64748b; cursor:pointer; transition:color .2s;
+    &:hover{ color:#475569; }
+  }
+
+  /* ------------------------------------------------------------
+     TABS  (Simplify-style rounded bar)
+     ------------------------------------------------------------*/
+  .tabs{
+    display:flex; gap:0;
+    background:#f3f4f6;                 /* light bar */
+    padding:3px;                        /* bar padding */
+    border-radius:14px;
+    margin: 5px 0 14px;                /* 26 px top clears close × */
+
+    .tab{
+      flex:1; display:flex; align-items:center; justify-content:center;
+      gap:6px;                          /* space for icon + text */
+      padding:8px 0;
+      font:600 15px/1 $font;
+      background:transparent;
+      color:#475569;
+      border:none; border-radius:10px;
+      cursor:pointer; transition:background .18s,color .18s,box-shadow .18s;
+
+      svg{ width:17px; height:17px; }
+
+      &.active{
+        background:#fff;
+        color:$teal;
+        box-shadow:0 1px 4px rgba(#000,.08);
+      }
+      &:hover:not(.active){ background:#e5e7eb; }
+    }
+  }
+
+  /* only the active pane is visible */
+  .pane        { display:none; }
+  .pane.active { display:block; }
+
+  /* ------------------------------------------------------------
+     SEARCH / SAVE ROW
+     ------------------------------------------------------------*/
+  .search-row{
+    display:flex; gap:8px; margin-bottom:14px;
+
+    input{
+      flex:1; padding:10px 14px;
+      border:1px solid #d1d5db; border-radius:8px;
+      font-size:15px;
+    }
+
+    /* primary btn */
+    .btn{
+      background:$teal; color:#fff; border:0; padding:9px 18px;
+      border-radius:8px; font-weight:600; cursor:pointer;
+      display:flex; align-items:center; justify-content:center; gap:6px;
+    }
+
+    /* secondary icon buttons (⟳ / ✕) */
+    .btn.sec{
+      background:#e5e7eb; color:#111;
+      width:44px; height:38px; padding:0; font-size:19px; line-height:0;
+      border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .15s;
+      &:hover  { background:#d4d4d8; }
+      &:active { background:#c6c6ca; }
+    }
+  }
+
+  /* ------------------------------------------------------------
+     TAG CHIPS  (Updates pane)
+     ------------------------------------------------------------*/
+  .tag-wrap{
+    display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;
+
+    .tag{
+      background:#e0e7ff; color:#1e40af;
+      padding:4px 8px; border-radius:16px; font-size:12px;
+      display:flex; align-items:center; gap:4px;
+      .x{ background:none; border:0; font-size:12px; color:#1e40af; cursor:pointer; }
+    }
+  }
+
+  /* ------------------------------------------------------------
+     NEWS CARDS
+     ------------------------------------------------------------*/
+  .news-list .card{
+    background:#fff; border:1px solid #eee; border-radius:10px;
+    padding:14px; margin-bottom:12px;
+
+    .impact{
+      display:inline-block; padding:2px 8px; border-radius:12px;
+      font:600 11px/1 $font; color:#fff; margin-bottom:6px;
+      &.high    { background:$green;  }
+      &.neutral { background:$yellow; }
+      &.fyi     { background:$blue;   }
+      &.fyi-pos { background:$fyiPos; }
+      &.fyi-neg { background:$fyiNeg; }
+      &.fyi-neu { background:$fyiNeu; }
+    }
+    .headline{ display:block; font-weight:600; color:#0f172a; text-decoration:none; margin-bottom:4px; }
+    .date    { color:#6b7280; font-size:12px; }
+  }
+}
+
+/* =============================================================
+   DRAGGABLE LAUNCHER BUTTON
+   =============================================================*/
+#news-logo{
+  position:fixed; bottom:20px; right:20px; width:52px; height:52px;
+  background:$teal; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 12px rgba(#000,.25);
+  cursor:grab; user-select:none; z-index:999998;
+  transition:transform .15s,box-shadow .15s;
+
+  img{ width:30px; height:30px; pointer-events:none; }
+
+  &:hover { box-shadow:0 6px 14px rgba(#000,.35); }
+  &:active{ transform:scale(.94); cursor:grabbing; }
+}
+/* title above tabs */
+.overlay-title{
+  margin: 0 0 10px;          /* gap below title */
+  font: 700 20px/1.2 $font;  /* bold, 20 px */
+  color: #0f172a;
+}
+
+
