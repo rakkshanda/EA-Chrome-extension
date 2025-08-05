@@ -28,7 +28,7 @@ const classify = (txt = "") => {
 };
 
 /* ==================================================================
-   Draggable launcher button  (📰)
+   Draggable launcher button 
    ================================================================== */
 const logo = document.createElement("div");
 logo.id = "news-logo";

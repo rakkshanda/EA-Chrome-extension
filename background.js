@@ -33,7 +33,7 @@ chrome.runtime.onMessage.addListener(async (msg, sender) => {
     return;   // stop here
   }
 
-  /* 2️⃣  Sentiment request for FYI headlines  */
+  /* Sentiment request for FYI headlines  */
   if (msg.sentiment) {
     try {
       const r = await fetch("https://sentim-api.herokuapp.com/api/v1/", {
