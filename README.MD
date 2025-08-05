@@ -11,5 +11,4 @@ One click opens a draggable dashboard with **Search** and **Updates** tabs, auto
 - **Search tab** – type a ticker *or just highlight text* on any webpage and hit **Fetch**.
 - **Updates tab** – save tickers as chips; each shows the latest **High-Impact** headline.
 - **Impact triage** – badges for **High Impact / Neutral / FYI**; FYI stories get Positive / Negative / Neutral colour via Sentim API.
-- **Local persistence** – watch-list chips survive browser restarts.
 
