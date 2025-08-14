@@ -114,15 +114,22 @@ $fyiNeu : #3b82f6;
     gap: 8px;
     margin-bottom: 10px;
     font-size: 14px;
+    margin-bottom: 14px;
+    justify-content: space-between;
+
+    .sort-buttons {
+      display: flex;
+      gap: 8px; // space between buttons
+    }
     
     .sort-btn {
       background: #ffffff;
       border: 1px solid #c2c2c7;
-      border-radius: 6px;
+      border-radius: 16px;
       padding: 4px 10px;
       cursor: pointer;
       font-weight: 500;
-      transition: background .15s;
+      transition: .15s;
   
       &:hover {
         background: #c2c2c7;

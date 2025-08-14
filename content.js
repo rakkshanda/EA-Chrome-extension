@@ -51,6 +51,7 @@ const overlay = document.createElement("div");
 overlay.id = "news-overlay";
 overlay.innerHTML = `
 <button class="close">×</button>
+<img src="./assets/icon.png"/>
 <h2 class="overlay-title">Portfolio Insights</h2> 
   <div class="tabs">
     <button class="tab active" data-tab="search">Search</button>
@@ -58,11 +59,14 @@ overlay.innerHTML = `
   </div>
 
   <!-- SORT -->
-  <span>Sort By:</span>
-      <button class="sort-btn" data-sort="date">Date</button>
-      <button class="sort-btn" data-sort="impact">Impact</button>
-      <!-- <button class="sort-btn" data-sort="trending">Trending</button> -->
-
+  <div class="sort-row">
+    <span>Sort By:</span>
+      <div class="sort-buttons">
+        <button class="sort-btn" data-sort="date">Date</button>
+        <button class="sort-btn" data-sort="impact">Impact</button>
+        <!-- <button class="sort-btn" data-sort="trending">Trending</button> -->
+      </div>
+  </div>
   <!-- SEARCH -->
   <div id="pane-search" class="pane active">
     <div class="search-row">

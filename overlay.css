@@ -26,6 +26,9 @@
      ------------------------------------------------------------*/
   /* only the active pane is visible */
   /* ------------------------------------------------------------
+    SORT ROW
+   ------------------------------------------------------------*/
+  /* ------------------------------------------------------------
      SEARCH / SAVE ROW
      ------------------------------------------------------------*/
   /* ------------------------------------------------------------
@@ -94,6 +97,35 @@
 #news-overlay .pane.active {
   display: block;
 }
+#news-overlay .sort-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  margin-bottom: 14px;
+  justify-content: space-between;
+}
+#news-overlay .sort-row .sort-buttons {
+  display: flex;
+  gap: 8px;
+}
+#news-overlay .sort-row .sort-btn {
+  background: #ffffff;
+  border: 1px solid #c2c2c7;
+  border-radius: 16px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.15s;
+}
+#news-overlay .sort-row .sort-btn:hover {
+  background: #c2c2c7;
+}
+#news-overlay .sort-row .sort-btn.active {
+  background: #a2a4a4;
+  color: #fff;
+}
 #news-overlay .search-row {
   display: flex;
   gap: 8px;
@@ -107,6 +139,7 @@
   border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 15px;
+  background-color: #fff;
 }
 #news-overlay .search-row .btn {
   background: #0f766e;
@@ -170,6 +203,11 @@
   border-radius: 10px;
   padding: 14px;
   margin-bottom: 12px;
+}
+#news-overlay .news-list .card:hover {
+  background: #c3f0c3;
+  border: 1px solid #000;
+  cursor: pointer;
 }
 #news-overlay .news-list .card .impact {
   display: inline-block;
