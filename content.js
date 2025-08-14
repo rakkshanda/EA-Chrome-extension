@@ -11,7 +11,7 @@ const fallback = document.createElement("style");
 fallback.textContent = `
   .pane        { display:none; }
   .pane.active { display:block; }
-  .tab.active  { background:#0f766e!important; color:#fff!important; }
+  .tab.active  { background:#0f7655!important; color:#fff!important; }
 `;
 document.head.appendChild(fallback);
 
@@ -51,8 +51,10 @@ const overlay = document.createElement("div");
 overlay.id = "news-overlay";
 overlay.innerHTML = `
 <button class="close">×</button>
-<img src="./assets/icon.png"/>
-<h2 class="overlay-title">Portfolio Insights</h2> 
+<div class="overlay-header">
+  <img src="./assets/icon.png" alt="Icon" class="overlay-icon"/>
+  <h2 class="overlay-title">Portfolio Insights</h2>
+</div>
   <div class="tabs">
     <button class="tab active" data-tab="search">Search</button>
     <button class="tab"        data-tab="updates">Updates</button>

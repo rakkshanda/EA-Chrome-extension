@@ -7,7 +7,7 @@ sans-serif;
 $green : #22c55e;
 $yellow : #eab308;
 $blue : #3b82f6;
-$teal : #0f766e;
+$teal : #0f7655;
 
 $fyiPos : #16a34a;
 $fyiNeg : #dc2626;
@@ -46,6 +46,23 @@ $fyiNeu : #3b82f6;
 
     &:hover {
       color: #475569;
+    }
+  }
+
+  .overlay-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  
+    .overlay-icon {
+      width: 24px;
+      height: 24px;
+    }
+  
+    .overlay-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $teal;
     }
   }
 
@@ -238,9 +255,14 @@ $fyiNeu : #3b82f6;
     margin-bottom: 12px;
     
     &:hover {
-      background: #c3f0c3;
-      border: 1px solid #000;
+      background: #d6f5d6;
+      border: 1px solid #7b7b7b;
       cursor: pointer;
+      transition: .15s;
+    }
+
+    &:active {
+      background: #bdddbd;
     }
 
     .impact {
