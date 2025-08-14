@@ -57,6 +57,12 @@ overlay.innerHTML = `
     <button class="tab"        data-tab="updates">Updates</button>
   </div>
 
+  <!-- SORT -->
+  <span>Sort By:</span>
+      <button class="sort-btn" data-sort="date">Date</button>
+      <button class="sort-btn" data-sort="impact">Impact</button>
+      <!-- <button class="sort-btn" data-sort="trending">Trending</button> -->
+
   <!-- SEARCH -->
   <div id="pane-search" class="pane active">
     <div class="search-row">
@@ -106,6 +112,35 @@ overlay.querySelector("#clearUpdates").textContent   = "×";
 overlay.style.display = "none";
 logo.onclick               = () => overlay.style.display = (overlay.style.display === "none" ? "block" : "none");
 overlay.querySelector(".close").onclick = () => overlay.style.display = "none";
+
+/* ==================================================================
+   Sort Helper
+   ================================================================== */
+   let currentSort = "date"; // default sort
+
+   overlay.querySelectorAll(".sort-btn").forEach(btn => {
+     btn.onclick = () => {
+       overlay.querySelectorAll(".sort-btn").forEach(b => b.classList.remove("active"));
+       btn.classList.add("active");
+       currentSort = btn.dataset.sort;
+       if (lastArticles && lastArticles.length) {
+         renderCards(lastArticles, sBox); // re-render with new sort
+       }
+     };
+   });
+   
+   let lastArticles = []; // store fetched results
+   
+   const sortArticles = (arr) => {
+     if (currentSort === "date") {
+       return arr.sort((a, b) => b.datetime - a.datetime);
+     }
+     if (currentSort === "impact") {
+       const order = { "High Impact": 0, "Neutral": 1, "FYI": 2 };
+       return arr.sort((a, b) => order[classify(a.headline).l] - order[classify(b.headline).l]);
+     }
+     return arr;
+   };  
 
 /* ==================================================================
    Tab switching
@@ -224,23 +259,23 @@ if (watchList.length) refreshBlocks();
 /* ==================================================================
    Render helpers
    ================================================================== */
-const renderCards = (arr, target) => {
-  target.innerHTML = arr.slice(0, 5).map((a, idx) => {
-    const { headline: h, url, datetime } = a;
-    const { l, c } = classify(h);
-    const id = `card-${idx}-${Math.random().toString(36).slice(2, 6)}`;
-
-    if (l === "FYI")
-      chrome.runtime.sendMessage({ sentiment: h, __id: id });
-
-    return `
-      <div class="card" id="${id}">
-        <span class="impact ${c}">${l}</span>
-        <a class="headline" href="${url}" target="_blank" rel="noreferrer">${h}</a>
-        <small class="date">${new Date(datetime * 1000).toLocaleString()}</small>
-      </div>`;
-  }).join("");
-};
+   const renderCards = (arr, target) => {
+    lastArticles = [...arr]; // store latest
+    const sorted = sortArticles([...arr]); // sort copy
+    target.innerHTML = sorted.slice(0, 5).map((a, idx) => {
+      const { headline: h, url, datetime } = a;
+      const { l, c } = classify(h);
+      const id = `card-${idx}-${Math.random().toString(36).slice(2, 6)}`;
+      if (l === "FYI")
+        chrome.runtime.sendMessage({ sentiment: h, __id: id });
+      return `
+        <div class="card" id="${id}">
+          <span class="impact ${c}">${l}</span>
+          <a class="headline" href="${url}" target="_blank" rel="noreferrer">${h}</a>
+          <small class="date">${new Date(datetime * 1000).toLocaleString()}</small>
+        </div>`;
+    }).join("");
+  }; 
 
 /* ==================================================================
    background.js responses

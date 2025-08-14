@@ -105,6 +105,35 @@ $fyiNeu : #3b82f6;
     display: block;
   }
 
+    /* ------------------------------------------------------------
+      SORT ROW
+     ------------------------------------------------------------*/
+  .sort-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    
+    .sort-btn {
+      background: #ffffff;
+      border: 1px solid #c2c2c7;
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background .15s;
+  
+      &:hover {
+        background: #c2c2c7;
+      }
+      &.active {
+        background: #a2a4a4;
+        color: #fff;
+      }
+    }
+  }  
+
   /* ------------------------------------------------------------
      SEARCH / SAVE ROW
      ------------------------------------------------------------*/
@@ -200,6 +229,12 @@ $fyiNeu : #3b82f6;
     border-radius: 10px;
     padding: 14px;
     margin-bottom: 12px;
+    
+    &:hover {
+      background: #c3f0c3;
+      border: 1px solid #000;
+      cursor: pointer;
+    }
 
     .impact {
       display: inline-block;
