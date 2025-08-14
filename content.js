@@ -50,7 +50,7 @@ document.onmouseup = () => (dragging = false);
 const overlay = document.createElement("div");
 overlay.id = "news-overlay";
 overlay.innerHTML = `
-  <button class="close">×</button>
+<button class="close">×</button>
 <h2 class="overlay-title">Portfolio Insights</h2> 
   <div class="tabs">
     <button class="tab active" data-tab="search">Search</button>
@@ -85,6 +85,17 @@ overlay.innerHTML = `
     </div>
   </div>
 `;
+overlay.style.zIndex = '999999';
+overlay.style.pointerEvents = 'auto';
+
+const searchInput = document.getElementById('searchInput');
+if (searchInput) {
+  searchInput.style.pointerEvents = 'auto';
+  searchInput.addEventListener('mousedown', e => e.stopPropagation());
+  searchInput.addEventListener('click', e => e.stopPropagation());
+  searchInput.addEventListener('keydown', e => e.stopPropagation());
+}
+
 document.body.appendChild(overlay);
 overlay.querySelector("#refreshSearch").textContent  = "⟳";
 overlay.querySelector("#clearSearch").textContent    = "×";
