@@ -32,7 +32,17 @@ const classify = (txt = "") => {
    ================================================================== */
 const logo = document.createElement("div");
 logo.id = "news-logo";
-logo.innerHTML = `<img src="${chrome.runtime.getURL('assets/icon.png')}" alt="N">`;
+logo.innerHTML = `
+    <img src="${chrome.runtime.getURL('assets/icon.png')}" alt="N">
+    <button class="logo-close" title="Hide">×</button>
+  `;
+const logoClose = logo.querySelector('.logo-close');
+if (logoClose) {
+  logoClose.onclick = (e) => {
+    e.stopPropagation();
+    logo.style.display = 'none';
+  };
+}
 document.body.appendChild(logo);
 
 let dragging = false, ox = 0, oy = 0;
@@ -60,15 +70,6 @@ overlay.innerHTML = `
     <button class="tab"        data-tab="updates">Updates</button>
   </div>
 
-  <!-- SORT -->
-  <div class="sort-row">
-    <span>Sort By:</span>
-      <div class="sort-buttons">
-        <button class="sort-btn" data-sort="date">Date</button>
-        <button class="sort-btn" data-sort="impact">Impact</button>
-        <!-- <button class="sort-btn" data-sort="trending">Trending</button> -->
-      </div>
-  </div>
   <!-- SEARCH -->
   <div id="pane-search" class="pane active">
     <div class="search-row">
@@ -76,6 +77,14 @@ overlay.innerHTML = `
       <button id="searchBtn"   class="btn">Fetch</button>
       <button id="refreshSearch" class="btn sec">Refresh</button>
       <button id="clearSearch"   class="btn sec">Clear</button>
+    </div>
+    <div class="sort-row">
+      <span>Sort By:</span>
+      <div class="sort-buttons">
+        <button class="sort-btn" data-sort="date">Date</button>
+        <button class="sort-btn" data-sort="impact">Impact</button>
+        <!-- <button class="sort-btn" data-sort="trending">Trending</button> -->
+      </div>
     </div>
     <div id="searchList" class="news-list">
       Highlight text or search to fetch news …
@@ -100,23 +109,36 @@ overlay.innerHTML = `
 overlay.style.zIndex = '999999';
 overlay.style.pointerEvents = 'auto';
 
-const searchInput = document.getElementById('searchInput');
-if (searchInput) {
-  searchInput.style.pointerEvents = 'auto';
-  searchInput.addEventListener('mousedown', e => e.stopPropagation());
-  searchInput.addEventListener('click', e => e.stopPropagation());
-  searchInput.addEventListener('keydown', e => e.stopPropagation());
-}
 
 document.body.appendChild(overlay);
+
 overlay.querySelector("#refreshSearch").textContent  = "⟳";
 overlay.querySelector("#clearSearch").textContent    = "×";
 overlay.querySelector("#refreshUpdates").textContent = "⟳";
 overlay.querySelector("#clearUpdates").textContent   = "×";
 
-/* show / hide */
+// ---- protect inputs from page scripts stealing events ----
+const swallow = (el) => {
+  if (!el) return;
+  ['mousedown','click','keydown','keypress','keyup','input','focus','blur'].forEach(evt =>
+    el.addEventListener(evt, e => e.stopPropagation(), true) // capture phase
+  );
+  el.style.pointerEvents = 'auto';
+};
+swallow(overlay.querySelector('#searchInput'));
+swallow(overlay.querySelector('#watchInput'));
+
+// show / hide (focus search when opening)
+
 overlay.style.display = "none";
-logo.onclick               = () => overlay.style.display = (overlay.style.display === "none" ? "block" : "none");
+logo.onclick = () => {
+  const willShow = overlay.style.display === "none";
+  overlay.style.display = willShow ? "block" : "none";
+  if (willShow) {
+    const si = overlay.querySelector('#searchInput');
+    if (si) si.focus();
+  }
+};
 overlay.querySelector(".close").onclick = () => overlay.style.display = "none";
 
 /* ==================================================================
@@ -182,11 +204,17 @@ const runSearch = q => {
 };
 
 sBtn.onclick      = () => runSearch(sInput.value.trim());
-sInput.onkeydown  = e => e.key === "Enter" && runSearch(sInput.value.trim());
+sInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    runSearch(sInput.value.trim());
+  }
+});
 sRefBtn.onclick   = () => lastQuery && runSearch(lastQuery);
 sClrBtn.onclick   = () => { sInput.value = ""; sBox.innerHTML = "Highlight text or search to fetch news …"; lastQuery = ""; };
 
 document.addEventListener("mouseup", () => {
+  if (overlay.style.display !== "block") return; // only when overlay is open
   const sel = window.getSelection().toString().trim();
   if (sel) { sInput.value = sel; runSearch(sel); }
 });

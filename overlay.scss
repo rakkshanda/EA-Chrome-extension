@@ -62,7 +62,7 @@ $fyiNeu : #3b82f6;
   
     .overlay-title {
       font-size: 1.5rem;
-      font-weight: 600;
+      font-weight: 700;
       color: $teal;
     }
   }
@@ -134,6 +134,7 @@ $fyiNeu : #3b82f6;
     font-size: 14px;
     margin-bottom: 14px;
     justify-content: space-between;
+    color: #6b7280;
 
     .sort-buttons {
       display: flex;
@@ -143,8 +144,8 @@ $fyiNeu : #3b82f6;
     .sort-btn {
       background: #ffffff;
       border: 1px solid #c2c2c7;
-      border-radius: 16px;
-      padding: 4px 10px;
+      border-radius: 999px;
+      padding: 6px 12px;
       cursor: pointer;
       font-weight: 500;
       transition: .15s;
@@ -171,9 +172,13 @@ $fyiNeu : #3b82f6;
       flex: 1;
       padding: 10px 14px;
       border: 1px solid #d1d5db;
-      border-radius: 8px;
+      border-radius: 999px;
       font-size: 15px;
       background-color: #fff;
+      background-repeat: no-repeat;
+      background-position: 14px center;
+      padding-left: 40px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23737a91' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
     }
 
     /* primary btn */
@@ -181,8 +186,9 @@ $fyiNeu : #3b82f6;
       background: $teal;
       color: #fff;
       border: 0;
-      padding: 9px 18px;
-      border-radius: 8px;
+      border-radius: 999px;
+      height: 38px;
+      padding: 0 18px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
@@ -200,7 +206,7 @@ $fyiNeu : #3b82f6;
       padding: 0;
       font-size: 19px;
       line-height: 0;
-      border-radius: 8px;
+      border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -249,15 +255,26 @@ $fyiNeu : #3b82f6;
      NEWS CARDS
      ------------------------------------------------------------*/
   .news-list .card {
-    background: #fff;
-    border: 1px solid #eee;
+    background: #eef9f3;
+    border: 1px solid #c7ead9;
     border-radius: 10px;
     padding: 14px;
     margin-bottom: 12px;
+    position: relative;
+
+    &::after {
+      content: '›';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      color: #94a3b8;
+    }
     
     &:hover {
-      background: #d6f5d6;
-      border: 1px solid #7b7b7b;
+      background: #e5f6ee;
+      border: 1px solid #9fdbc4;
       cursor: pointer;
       transition: .15s;
     }
@@ -268,11 +285,24 @@ $fyiNeu : #3b82f6;
 
     .impact {
       display: inline-block;
-      padding: 2px 8px;
-      border-radius: 12px;
+      border-radius: 999px;
+      padding: 4px 10px 4px 22px;
+      position: relative;
       font: 600 11px/1 $font;
       color: #fff;
       margin-bottom: 6px;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,.9);
+      }
 
       &.high {
         background: $green;
