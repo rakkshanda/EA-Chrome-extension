@@ -377,6 +377,32 @@ $fyiNeu : #3b82f6;
     transform: scale(.94);
     cursor: grabbing;
   }
+
+  .logo-close {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #686363;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1;
+    padding: 0;
+    z-index: 1;
+    transition: background 0.15s;
+  }
+  .logo-close:hover {
+    background: #302121;
+  }
 }
 
 /* title above tabs */
