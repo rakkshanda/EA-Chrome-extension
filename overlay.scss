@@ -301,7 +301,6 @@ $fyiNeu : #3b82f6;
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: rgba(255,255,255,.9);
       }
 
       &.high {
@@ -382,7 +381,7 @@ $fyiNeu : #3b82f6;
 
 /* title above tabs */
 .overlay-title {
-  margin: 0 0 10px;
+  margin: 0 0 0;
   /* gap below title */
   font: 700 20px/1.2 $font;
   /* bold, 20 px */
