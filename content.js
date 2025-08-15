@@ -52,7 +52,7 @@ overlay.id = "news-overlay";
 overlay.innerHTML = `
 <button class="close">×</button>
 <div class="overlay-header">
-  <img src="./assets/icon.png" alt="Icon" class="overlay-icon"/>
+  <img src="${chrome.runtime.getURL('assets/icon.png')}" alt="Logo" class="overlay-icon">
   <h2 class="overlay-title">Portfolio Insights</h2>
 </div>
   <div class="tabs">

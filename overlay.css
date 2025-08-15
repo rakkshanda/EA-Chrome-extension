@@ -60,6 +60,8 @@
 #news-overlay .overlay-header .overlay-icon {
   width: 24px;
   height: 24px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 #news-overlay .overlay-header .overlay-title {
   font-size: 1.5rem;
