@@ -75,8 +75,8 @@ overlay.innerHTML = `
     <div class="search-row">
       <input id="searchInput" placeholder="Search Stock / ETF">
       <button id="searchBtn"   class="btn">Fetch</button>
-      <button id="refreshSearch" class="btn sec">Refresh</button>
-      <button id="clearSearch"   class="btn sec">Clear</button>
+      <button id="refreshSearch" class="btn sec" aria-label="Refresh" title="Refresh"></button>
+      <button id="clearSearch"   class="btn sec" aria-label="Clear"   title="Clear"></button>
     </div>
     <div class="sort-row">
       <span>Sort By:</span>
@@ -97,8 +97,8 @@ overlay.innerHTML = `
     <div class="search-row">
       <input id="watchInput" placeholder="Add company e.g. AAPL">
       <button id="addBtn"        class="btn">Save</button>
-      <button id="refreshUpdates" class="btn sec">Refresh</button>
-      <button id="clearUpdates"   class="btn sec">Clear</button>
+      <button id="refreshUpdates" class="btn sec" aria-label="Refresh" title="Refresh"></button>
+      <button id="clearUpdates"   class="btn sec" aria-label="Clear"   title="Clear"></button>
     </div>
      <div id="tagWrap" class="tag-wrap"></div>
     <div id="updatesList" class="news-list">
@@ -112,10 +112,11 @@ overlay.style.pointerEvents = 'auto';
 
 document.body.appendChild(overlay);
 
-overlay.querySelector("#refreshSearch").textContent  = "⟳";
-overlay.querySelector("#clearSearch").textContent    = "×";
-overlay.querySelector("#refreshUpdates").textContent = "⟳";
-overlay.querySelector("#clearUpdates").textContent   = "×";
+// Removed the following lines as icons are now provided via CSS backgrounds
+// overlay.querySelector("#refreshSearch").textContent  = "⟳";
+// overlay.querySelector("#clearSearch").textContent    = "×";
+// overlay.querySelector("#refreshUpdates").textContent = "⟳";
+// overlay.querySelector("#clearUpdates").textContent   = "×";
 
 // ---- protect inputs from page scripts stealing events ----
 const swallow = (el) => {
