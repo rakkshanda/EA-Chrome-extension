@@ -54,8 +54,14 @@ chrome.action.onClicked.addListener(tab =>
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     func: () => {
-      const o = document.getElementById("news-overlay");
-      if (o) o.style.display = "block";
+      const overlay = document.getElementById("news-overlay");
+      const logo    = document.getElementById("news-logo");
+      if (overlay) {
+        overlay.style.display = "block";
+        const si = overlay.querySelector('#searchInput');
+        if (si) si.focus();
+      }
+      if (logo) logo.style.display = "";
     }
   })
 );

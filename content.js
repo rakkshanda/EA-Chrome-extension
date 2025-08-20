@@ -44,6 +44,7 @@ if (logoClose) {
   };
 }
 document.body.appendChild(logo);
+logo.style.display = 'none';
 
 let dragging = false, ox = 0, oy = 0;
 logo.onmousedown = e => { dragging = true; ox = e.offsetX; oy = e.offsetY; };
@@ -87,7 +88,7 @@ overlay.innerHTML = `
       </div>
     </div>
     <div id="searchList" class="news-list">
-      Highlight text or search to fetch news …
+      Highlight text or search to fetch news
     </div>
   </div>
 
@@ -95,7 +96,7 @@ overlay.innerHTML = `
   <div id="pane-updates" class="pane">
    
     <div class="search-row">
-      <input id="watchInput" placeholder="Add company e.g. AAPL">
+      <input id="watchInput" placeholder="Search Stock / ETF">
       <button id="addBtn"        class="btn">Save</button>
       <button id="refreshUpdates" class="btn sec" aria-label="Refresh" title="Refresh"></button>
       <button id="clearUpdates"   class="btn sec" aria-label="Clear"   title="Clear"></button>
@@ -251,7 +252,7 @@ const renderChips = () => {
 /* placeholder + fetch per company */
 const refreshBlocks = () => {
   if (!watchList.length) {
-    uBox.textContent = "Add companies to watch for high-impact updates …";
+    uBox.textContent = "Add companies to watch for high-impact updates";
     return;
   }
 
