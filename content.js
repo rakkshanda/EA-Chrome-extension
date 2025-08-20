@@ -11,7 +11,7 @@ const fallback = document.createElement("style");
 fallback.textContent = `
   .pane        { display:none; }
   .pane.active { display:block; }
-  .tab.active  { background:#0f7655!important; color:#fff!important; }
+  .tab.active  { background:#0f7655; color:#fff; }
 `;
 document.head.appendChild(fallback);
 
@@ -67,8 +67,8 @@ overlay.innerHTML = `
   <h2 class="overlay-title">Portfolio Insights</h2>
 </div>
   <div class="tabs">
-    <button class="tab active" data-tab="search">Search</button>
-    <button class="tab"        data-tab="updates">Updates</button>
+    <button id="search" class="tab search active" data-tab="search">Search</button>
+    <button id="updates" class="tab updates" data-tab="updates">Updates</button>
   </div>
 
   <!-- SEARCH -->
@@ -80,7 +80,7 @@ overlay.innerHTML = `
       <button id="clearSearch"   class="btn sec" aria-label="Clear"   title="Clear"></button>
     </div>
     <div class="sort-row">
-      <span>Sort By:</span>
+      <span class="label">Sort by</span>
       <div class="sort-buttons">
         <button class="sort-btn" data-sort="date">Date</button>
         <button class="sort-btn" data-sort="impact">Impact</button>
@@ -103,7 +103,7 @@ overlay.innerHTML = `
     </div>
      <div id="tagWrap" class="tag-wrap"></div>
     <div id="updatesList" class="news-list">
-      Add companies to watch for high-impact updates …
+      Add companies to watch for high-impact updates
     </div>
   </div>
 `;
@@ -359,3 +359,37 @@ chrome.runtime.onMessage.addListener(msg => {
   if (!msg.articles)  { sBox.textContent = "😶 No news found.";       return; }
   renderCards(msg.articles, sBox);
 });
+/* ==================================================================
+   Flickerless Tab Switch (non-destructive, capture-phase)
+   ================================================================== */
+(() => {
+  try {
+    const overlayEl = document.getElementById('news-overlay');
+    if (!overlayEl || overlayEl.dataset.tabsWired) return; // already wired or not present
+
+    const tabs  = Array.from(overlayEl.querySelectorAll('.tabs .tab'));
+    const panes = Array.from(overlayEl.querySelectorAll('.pane'));
+    if (!tabs.length || !panes.length) return;
+
+    const activate = (btn) => {
+      const targetId = 'pane-' + btn.dataset.tab;
+      // 1) Add active to the clicked tab + correct pane first
+      btn.classList.add('active');
+      panes.forEach(p => p.classList.toggle('active', p.id === targetId));
+      // 2) Remove active from the other tab in a microtask (avoids mid-frame repaint)
+      Promise.resolve().then(() => {
+        tabs.forEach(b => { if (b !== btn) b.classList.remove('active'); });
+      });
+    };
+
+    // Attach in CAPTURE phase so we run before older bubble-phase handlers
+    tabs.forEach(b => b.addEventListener('click', (e) => {
+      if (!b.classList.contains('active')) activate(b);
+    }, true));
+
+    overlayEl.dataset.tabsWired = '1';
+  } catch (err) {
+    // fail-safe: never break the page
+    console.warn('[EA] flickerless tabs setup failed:', err);
+  }
+})();

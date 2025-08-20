@@ -13,6 +13,14 @@ $fyiPos : #16a34a;
 $fyiNeg : #dc2626;
 $fyiNeu : #3b82f6;
 
+$surface: #ffffff;
+$surfaceAlt: #f9fafb;
+$borderColor: rgba(15, 23, 42, 0.08);
+$shadowLg: 0 10px 30px rgba(2, 6, 23, 0.12);
+$shadowSm: 0 2px 8px rgba(2, 6, 23, 0.08);
+$radiusLg: 16px;
+$radiusSm: 12px;
+
 /* =============================================================
    MAIN OVERLAY CONTAINER
    =============================================================*/
@@ -23,63 +31,53 @@ $fyiNeu : #3b82f6;
   width: 420px;
   max-height: 80vh;
   overflow-y: auto;
-  background: #fafafa;
-  color: #111;
-  border-radius: 12px;
-  box-shadow: 0 4px 14px rgba(#000, .15);
+  background: rgba(255, 255, 255, 0.85);
+  color: #0f172a;
+  border-radius: $radiusLg;
+  box-shadow: $shadowLg;
+  border: 1px solid $borderColor;
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
   z-index: 999999;
   font-family: $font;
-  padding: 16px 20px 20px;
+  padding: 18px 20px 20px;
   display: none;
 
   /* -------- CLOSE × ------------ */
   .close {
     position: absolute;
-    top: 6px;
-    right: 8px;
-    background: none;
+    top: 8px;
+    right: 10px;
+    background: transparent;
     border: 0;
     font-size: 20px;
     color: #64748b;
     cursor: pointer;
-    transition: color .2s;
+    transition: color .2s, transform .15s;
 
-    &:hover {
-      color: #475569;
-    }
+    &:hover { color: #475569; transform: scale(1.05); }
   }
 
   .overlay-header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   
-    .overlay-icon {
-      width: 24px;
-      height: 24px;
-      object-fit: cover;
-    }
-  
-    .overlay-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: $teal;
-    }
+    .overlay-icon { width: 24px; height: 24px; object-fit: cover; }
+    .overlay-title { font-size: 1.25rem; font-weight: 700; color: #0d8074; }
   }
 
   /* ------------------------------------------------------------
-     TABS  (Simplify-style rounded bar)
+     TABS  (sleek rounded bar)
      ------------------------------------------------------------*/
   .tabs {
     display: flex;
     gap: 0;
-    background: #f3f4f6;
-    /* light bar */
-    padding: 3px;
-    /* bar padding */
-    border-radius: 14px;
-    margin: 5px 0 14px;
-    /* 26 px top clears close × */
+    background: rgba(15, 23, 42, 0.04);
+    padding: 4px;
+    border-radius: 999px;
+    margin: 6px 0 14px;
+    border: 1px solid $borderColor;
 
     .tab {
       flex: 1;
@@ -87,76 +85,80 @@ $fyiNeu : #3b82f6;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      /* space for icon + text */
       padding: 8px 0;
-      font: 600 15px/1 $font;
+      font: 600 14px/1 $font;
       background: transparent;
       color: #475569;
       border: none;
-      border-radius: 10px;
+      border-radius: 999px;
       cursor: pointer;
-      transition: background .18s, color .18s, box-shadow .18s;
+      transition: background .18s, color .18s, box-shadow .18s, transform .1s;
 
-      svg {
-        width: 17px;
-        height: 17px;
-      }
+      svg { width: 16px; height: 16px; }
 
       &.active {
-        background: #fff;
-        color: $teal;
-        box-shadow: 0 1px 4px rgba(#000, .08);
+        background: #0d8074;
+        color: #fff;
+        box-shadow: $shadowSm;
+        border-radius: 0;
       }
 
-      &:hover:not(.active) {
-        background: #e5e7eb;
-      }
+      &:hover:not(.active) { background: rgba(15, 23, 42, 0.06); }
+      &:active { transform: translateY(1px); }
+    }
+
+    /* Side-specific rounding for active tabs */
+    .tab.search.active,
+    #search.tab.active {
+      border-radius: 999px 0 0 999px; /* rounded on left only */
+    }
+
+    .tab.updates.active,
+    #updates.tab.active {
+      border-radius: 0 999px 999px 0; /* rounded on right only */
+    }
+
+    /* Results tab: keep green accent when active */
+    .tab.results.active,
+    .tab#results.active {
+      color: $green;
+      box-shadow: 0 1px 6px rgba(34, 197, 94, 0.25);
     }
   }
 
   /* only the active pane is visible */
-  .pane {
-    display: none;
-  }
+  .pane { display: none; }
+  .pane.active { display: block; }
 
-  .pane.active {
-    display: block;
-  }
-
-    /* ------------------------------------------------------------
-      SORT ROW
+  /* ------------------------------------------------------------
+     SORT ROW
      ------------------------------------------------------------*/
   .sort-row {
+    font-size: 12px;
+  
+    /* If you use a label element inside sort-row, make it match too */
+    .label { font-size: 12px; color: #000; font-weight: 600; background: none; background-color: transparent; }
+
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 10px;
-    font-size: 14px;
     margin-bottom: 14px;
     justify-content: space-between;
     color: #6b7280;
 
-    .sort-buttons {
-      display: flex;
-      gap: 8px; // space between buttons
-    }
+    .sort-buttons { display: flex; gap: 8px; }
     
     .sort-btn {
-      background: #ffffff;
-      border: 1px solid #c2c2c7;
+      background: $surface;
+      border: 1px solid $borderColor;
       border-radius: 999px;
       padding: 6px 12px;
       cursor: pointer;
-      font-weight: 500;
+      font-weight: 600;
       transition: .15s;
   
-      &:hover {
-        background: #c2c2c7;
-      }
-      &.active {
-        background: #a2a4a4;
-        color: #fff;
-      }
+      &:hover { background: $surfaceAlt; }
+      &.active { background: #0a3b5e; color: #fff; border-color: transparent; }
     }
   }  
 
@@ -170,64 +172,62 @@ $fyiNeu : #3b82f6;
 
     input {
       flex: 1;
-      padding: 5px 14px;
-      border: 1px solid #d1d5db;
+      padding: 10px 16px 10px 42px;
+      border: 1px solid $borderColor;
       border-radius: 999px;
       font-size: 15px;
-      background-color: #fff;
+      background-color: $surface;
       background-repeat: no-repeat;
       background-position: 14px center;
-      padding-left: 40px;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23737a91' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E");
       outline: none;
+      transition: box-shadow .15s, border-color .15s, background-color .15s;
+
+      &::placeholder { color: #94a3b8; }
 
       &:focus {
-        outline: none;
-        box-shadow: 0 0 0 3px rgba(15, 118, 85, 0.3);
-        border-color: #0f7655;
+        box-shadow: 0 0 0 4px rgba(15, 118, 85, 0.20);
+        border-color: #0f766e;
+        background-color: #fff;
       }
     }
 
-    /* primary btn */
     .btn {
-      background: $teal;
+      background: #0d8074;
       color: #fff;
       border: 0;
       border-radius: 999px;
-      height: 38px;
+      height: 40px;
       padding: 0 18px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      box-shadow: $shadowSm;
+      transition: transform .1s ease, box-shadow .15s ease, filter .15s ease;
+      &:hover { filter: brightness(1.03); box-shadow: 0 6px 14px rgba(2,6,23,0.12); }
+      &:active { transform: translateY(1px); }
     }
 
-    /* secondary icon buttons (⟳ / ✕) */
     .btn.sec {
-      background: #e5e7eb;
-      color: #111;
+      background: $surfaceAlt;
+      color: #0f172a;
       width: 44px;
-      height: 38px;
+      height: 40px;
       padding: 0;
-      border-radius: 1000px;
+      border: 1px solid $borderColor;
+      border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background .15s;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: 18px;
+      transition: background .15s, box-shadow .15s;
 
-      &:hover {
-        background: #d4d4d8;
-      }
-
-      &:active {
-        background: #c6c6ca;
-      }
+      &:hover { background: #eef2f7; box-shadow: $shadowSm; }
+      &:active { background: #e5e9f0; }
     }
+
     #refreshSearch {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='23 4 23 10 17 10'/%3E%3Cpolyline points='1 20 1 14 7 14'/%3E%3Cpath d='M3.51 9a9 9 0 0114.85-3.36L23 10'/%3E%3Cpath d='M20.49 15a9 9 0 01-14.85 3.36L1 14'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
@@ -255,7 +255,7 @@ $fyiNeu : #3b82f6;
   }
 
   /* ------------------------------------------------------------
-     TAG CHIPS  (Updates pane)
+     TAG CHIPS
      ------------------------------------------------------------*/
   .tag-wrap {
     display: flex;
@@ -264,20 +264,21 @@ $fyiNeu : #3b82f6;
     margin-bottom: 12px;
 
     .tag {
-      background: #e0e7ff;
+      background: #eef2ff;
       color: #1e40af;
-      padding: 4px 8px;
-      border-radius: 16px;
+      padding: 4px 10px;
+      border-radius: 999px;
       font-size: 12px;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+      border: 1px solid rgba(30, 64, 175, 0.18);
 
       .x {
         background: none;
         border: 0;
         font-size: 12px;
-        color: #1e40af;
+        color: inherit;
         cursor: pointer;
       }
     }
@@ -288,11 +289,12 @@ $fyiNeu : #3b82f6;
      ------------------------------------------------------------*/
   .news-list .card {
     background: #eef9f3;
-    border: 1px solid #c7ead9;
-    border-radius: 10px;
+    border: 1px solid $borderColor;
+    border-radius: $radiusSm;
     padding: 14px;
     margin-bottom: 12px;
     position: relative;
+    box-shadow: 0 1px 0 rgba(2, 6, 23, 0.04);
 
     &::after {
       content: '›';
@@ -305,27 +307,26 @@ $fyiNeu : #3b82f6;
     }
     
     &:hover {
-      background: #e5f6ee;
-      border: 1px solid #9fdbc4;
+      background: $surfaceAlt;
+      border: 1px solid rgba(15, 23, 42, 0.12);
       cursor: pointer;
       transition: .15s;
+      box-shadow: $shadowSm;
     }
 
-    &:active {
-      background: #bdddbd;
-    }
+    &:active { background: #e8eef5; }
 
     .impact {
       display: inline-block;
       border-radius: 999px;
       padding: 4px 10px 4px 10px;
       position: relative;
-      font: 600 11px/1 $font;
+      font: 700 11px/1 $font;
       color: #fff;
       margin-bottom: 6px;
 
       &::before {
-        content: '';
+      
         position: absolute;
         left: 8px;
         top: 50%;
@@ -333,45 +334,19 @@ $fyiNeu : #3b82f6;
         width: 8px;
         height: 8px;
         border-radius: 50%;
+        box-shadow: 0 0 0 3px rgba(255,255,255,.25);
       }
 
-      &.high {
-        background: $green;
-      }
-
-      &.neutral {
-        background: $yellow;
-      }
-
-      &.fyi {
-        background: $blue;
-      }
-
-      &.fyi-pos {
-        background: $fyiPos;
-      }
-
-      &.fyi-neg {
-        background: $fyiNeg;
-      }
-
-      &.fyi-neu {
-        background: $fyiNeu;
-      }
+      &.high   { background: $green; }
+      &.neutral{ background: $yellow; }
+      &.fyi    { background: $blue; }
+      &.fyi-pos{ background: $fyiPos; }
+      &.fyi-neg{ background: $fyiNeg; }
+      &.fyi-neu{ background: $fyiNeu; }
     }
 
-    .headline {
-      display: block;
-      font-weight: 600;
-      color: #0f172a;
-      text-decoration: none;
-      margin-bottom: 4px;
-    }
-
-    .date {
-      color: #6b7280;
-      font-size: 12px;
-    }
+    .headline { display: block; font-weight: 700; color: #0f172a; text-decoration: none; margin-bottom: 4px; }
+    .date { color: #6b7280; font-size: 12px; }
   }
 }
 
@@ -380,35 +355,28 @@ $fyiNeu : #3b82f6;
    =============================================================*/
 #news-logo {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 52px;
-  height: 52px;
-  background: #fff;
+  bottom: 22px;
+  right: 22px;
+  width: 56px;
+  height: 56px;
+  background: rgba(255,255,255,0.85);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(#000, .25);
+  border: 1px solid $borderColor;
+  box-shadow: $shadowLg;
+  backdrop-filter: saturate(140%) blur(6px);
+  -webkit-backdrop-filter: saturate(140%) blur(6px);
   cursor: grab;
   user-select: none;
   z-index: 999998;
-  transition: transform .15s, box-shadow .15s;
+  transition: transform .12s ease, box-shadow .15s ease, filter .15s ease;
 
-  img {
-    width: 30px;
-    height: 30px;
-    pointer-events: none;
-  }
+  img { width: 28px; height: 28px; pointer-events: none; }
 
-  &:hover {
-    box-shadow: 0 6px 14px rgba(#000, .35);
-  }
-
-  &:active {
-    transform: scale(.94);
-    cursor: grabbing;
-  }
+  &:hover { box-shadow: 0 12px 28px rgba(2,6,23,0.18); filter: brightness(1.02); }
+  &:active { transform: scale(.96); cursor: grabbing; }
 
   .logo-close {
     position: absolute;
@@ -417,7 +385,7 @@ $fyiNeu : #3b82f6;
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #686363;
+    background: #1f2937;
     color: #fff;
     font-size: 14px;
     font-weight: bold;
@@ -432,9 +400,7 @@ $fyiNeu : #3b82f6;
     z-index: 1;
     transition: background 0.15s;
   }
-  .logo-close:hover {
-    background: #302121;
-  }
+  .logo-close:hover { background: #111827; }
 }
 
 /* title above tabs */
